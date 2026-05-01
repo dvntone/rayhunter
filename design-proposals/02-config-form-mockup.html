@@ -675,5 +675,37 @@
             </div>
         </div>
     </div>
+    <script>
+        // Collapse/expand card sections
+        document.querySelectorAll('.card-header').forEach(function(header, index) {
+            var body = header.nextElementSibling;
+            var chevron = header.querySelector('.chevron');
+            var bodyId = 'card-body-' + index;
+            body.id = bodyId;
+            header.setAttribute('role', 'button');
+            header.setAttribute('tabindex', '0');
+            header.setAttribute('aria-expanded', 'true');
+            header.setAttribute('aria-controls', bodyId);
+
+            function toggle() {
+                var expanded = header.getAttribute('aria-expanded') === 'true';
+                header.setAttribute('aria-expanded', String(!expanded));
+                body.style.display = expanded ? 'none' : '';
+                if (expanded) {
+                    chevron.classList.remove('expanded');
+                } else {
+                    chevron.classList.add('expanded');
+                }
+            }
+
+            header.addEventListener('click', toggle);
+            header.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggle();
+                }
+            });
+        });
+    </script>
 </body>
 </html>
