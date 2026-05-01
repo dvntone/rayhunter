@@ -58,6 +58,23 @@ This directory contains comprehensive UI/UX design proposals for the Rayhunter w
 - 🚀 Implementation roadmap (9-week phased approach)
 - 📊 Success metrics and KPIs
 
+#### `DEVICE_UI_CAPABILITIES.md` 📱
+**Device Communication Research Document:**
+- 🔍 Comprehensive analysis of Orbic device capabilities
+- 💬 Text messaging feasibility study (Web → Device)
+- 🖥️ Display system architecture documentation
+- 📡 Serial communication protocols (AT commands)
+- 💡 Implementation recommendations and code examples
+- ⏱️ Development timeline estimates
+- 🚧 Technical limitations and constraints
+- 🎯 Three-phase implementation roadmap
+
+**Key Findings:**
+- **One-way messaging:** Web → Device text display is feasible (2-3 days development)
+- **Display specs:** 128x128 RGB565 framebuffer on Orbic
+- **Recommended approach:** Extend DisplayState enum for text rendering
+- **Alternative:** Leverage existing log system for device → web communication
+
 ---
 
 ## 🚀 Quick Start
@@ -71,20 +88,32 @@ This directory contains comprehensive UI/UX design proposals for the Rayhunter w
 
 2. **Open mockups in browser:**
    ```bash
-   # Linux
+   # Linux - Light Theme
    xdg-open 01-dashboard-mockup.html
    xdg-open 02-config-form-mockup.html
    xdg-open 03-animations-demo.html
 
-   # macOS
+   # Linux - Dark Theme 🌙
+   xdg-open 04-dashboard-dark-theme.html
+   xdg-open 05-config-dark-theme.html
+
+   # macOS - Light Theme
    open 01-dashboard-mockup.html
    open 02-config-form-mockup.html
    open 03-animations-demo.html
 
-   # Windows
+   # macOS - Dark Theme 🌙
+   open 04-dashboard-dark-theme.html
+   open 05-config-dark-theme.html
+
+   # Windows - Light Theme
    start 01-dashboard-mockup.html
    start 02-config-form-mockup.html
    start 03-animations-demo.html
+
+   # Windows - Dark Theme 🌙
+   start 04-dashboard-dark-theme.html
+   start 05-config-dark-theme.html
    ```
 
 3. **Or use a local server:**
@@ -122,23 +151,44 @@ This directory contains comprehensive UI/UX design proposals for the Rayhunter w
 
 ```
 design-proposals/
-├── README.md                      # This file
-├── DESIGN_PROPOSAL.md             # Complete design specification
-├── 01-dashboard-mockup.html       # Interactive dashboard mockup
-├── 02-config-form-mockup.html     # Configuration form mockup
-└── 03-animations-demo.html        # Animation examples
+├── README.md                           # This file
+├── DESIGN_PROPOSAL.md                  # Complete design specification (50+ pages)
+├── DEVICE_UI_CAPABILITIES.md           # Device communication research
+│
+├── 01-dashboard-mockup.html            # Dashboard mockup (light theme)
+├── 02-config-form-mockup.html          # Configuration mockup (light theme)
+├── 03-animations-demo.html             # Animation examples & demos
+│
+├── 04-dashboard-dark-theme.html        # Dashboard mockup (dark theme) 🌙
+└── 05-config-dark-theme.html           # Configuration mockup (dark theme) 🌙
 ```
+
+**Total:** 8 files - 5 HTML mockups, 3 documentation files
 
 ---
 
 ## 🎨 Design System Highlights
 
-### Color Palette
+### Color Palettes
+
+#### Light Theme
 - **Primary:** `#4e4eb1` (Rayhunter blue)
 - **Success:** `#48bb78` (Green for active/safe states)
 - **Warning:** `#ed8936` (Orange for caution)
 - **Danger:** `#f56565` (Red for alerts)
 - **Info:** `#4299e1` (Blue for information)
+- **Background:** `#f5f7fa` (Light gray)
+- **Surface:** `#ffffff` (White cards)
+
+#### Dark Theme 🌙
+- **Primary:** `#6b6bd4` (Brighter blue for dark mode)
+- **Success:** `#3fb950` (GitHub green)
+- **Warning:** `#d29922` (Amber warning)
+- **Danger:** `#da3633` (Vibrant red)
+- **Info:** `#58a6ff` (Sky blue)
+- **Background:** `#0f1419` (Deep black)
+- **Surface:** `#161b22` (Dark gray cards)
+- **Text:** `#e6edf3` (Light text)
 
 ### Typography
 - **Font Family:** System font stack (optimal performance)

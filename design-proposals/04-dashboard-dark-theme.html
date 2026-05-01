@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rayhunter Dashboard - Dark Theme</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #0f1419;
+            color: #e6edf3;
+        }
+
+        /* Dark Theme Design Tokens */
+        :root {
+            --color-primary: #6b6bd4;
+            --color-primary-dark: #5858c0;
+            --color-success: #3fb950;
+            --color-warning: #d29922;
+            --color-danger: #da3633;
+            --color-info: #58a6ff;
+
+            --color-bg-base: #0f1419;
+            --color-bg-surface: #161b22;
+            --color-bg-elevated: #1c2128;
+            --color-bg-hover: #21262d;
+
+            --color-text-primary: #e6edf3;
+            --color-text-secondary: #848d97;
+            --color-text-muted: #57606a;
+
+            --color-border: #30363d;
+            --color-border-light: #21262d;
+
+            --shadow-sm: 0 0 transparent, 0 0 transparent, 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+            --shadow-md: 0 0 transparent, 0 0 transparent, 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 0 transparent, 0 0 transparent, 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+
+            --spacing-1: 0.25rem;
+            --spacing-2: 0.5rem;
+            --spacing-3: 0.75rem;
+            --spacing-4: 1rem;
+            --spacing-6: 1.5rem;
+            --spacing-8: 2rem;
+
+            --radius-sm: 0.25rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+
+            --font-size-xs: 0.75rem;
+            --font-size-sm: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-lg: 1.125rem;
+            --font-size-xl: 1.25rem;
+            --font-size-2xl: 1.5rem;
+            --font-size-3xl: 1.875rem;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1c2128, #161b22);
+            color: var(--color-text-primary);
+            padding: var(--spacing-4) var(--spacing-6);
+            box-shadow: var(--shadow-md);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-3);
+        }
+
+        .header-logo h1 {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-info));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: var(--spacing-4);
+        }
+
+        .header-nav-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-2);
+            padding: var(--spacing-2) var(--spacing-3);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            color: var(--color-text-secondary);
+            font-size: var(--font-size-sm);
+            transition: all 0.2s;
+            border: 1px solid var(--color-border);
+        }
+
+        .header-nav-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--color-text-primary);
+            border-color: var(--color-primary);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--spacing-6);
+        }
+
+        /* Status Card */
+        .status-card {
+            background: var(--color-bg-surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            padding: var(--spacing-6);
+            margin-bottom: var(--spacing-6);
+            border: 1px solid var(--color-border);
+        }
+
+        .status-card.recording {
+            border-left: 4px solid var(--color-success);
+            background: linear-gradient(to right, rgba(63, 185, 80, 0.1), var(--color-bg-surface));
+        }
+
+        .status-card.warning {
+            border-left: 4px solid var(--color-danger);
+            background: linear-gradient(to right, rgba(218, 54, 51, 0.1), var(--color-bg-surface));
+        }
+
+        .status-card.inactive {
+            border-left: 4px solid var(--color-text-muted);
+        }
+
+        .status-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-4);
+        }
+
+        .status-title {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-3);
+        }
+
+        .status-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .status-icon.success {
+            background: rgba(63, 185, 80, 0.2);
+            color: var(--color-success);
+        }
+
+        .status-icon.danger {
+            background: rgba(218, 54, 51, 0.2);
+            color: var(--color-danger);
+        }
+
+        .status-badge {
+            padding: var(--spacing-2) var(--spacing-3);
+            border-radius: var(--radius-md);
+            font-size: var(--font-size-sm);
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-2);
+        }
+
+        .status-badge.success {
+            background: rgba(63, 185, 80, 0.2);
+            color: var(--color-success);
+            border: 1px solid rgba(63, 185, 80, 0.3);
+        }
+
+        .status-badge.warning {
+            background: rgba(210, 153, 34, 0.2);
+            color: var(--color-warning);
+            border: 1px solid rgba(210, 153, 34, 0.3);
+        }
+
+        .status-badge.danger {
+            background: rgba(218, 54, 51, 0.2);
+            color: var(--color-danger);
+            border: 1px solid rgba(218, 54, 51, 0.3);
+        }
+
+        .pulse {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: currentColor;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .status-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-4);
+            margin-top: var(--spacing-4);
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-1);
+        }
+
+        .info-label {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+            font-weight: 500;
+        }
+
+        .info-value {
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            color: var(--color-text-primary);
+        }
+
+        /* System Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-4);
+            margin-bottom: var(--spacing-6);
+        }
+
+        .stat-card {
+            background: var(--color-bg-surface);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-4);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--color-border);
+            transition: all 0.2s;
+        }
+
+        .stat-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+            border-color: var(--color-primary);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-3);
+        }
+
+        .stat-label {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+            font-weight: 500;
+        }
+
+        .stat-icon {
+            font-size: var(--font-size-xl);
+        }
+
+        .stat-value {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            color: var(--color-text-primary);
+        }
+
+        .stat-description {
+            font-size: var(--font-size-xs);
+            color: var(--color-text-muted);
+            margin-top: var(--spacing-1);
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            height: 8px;
+            background: var(--color-bg-hover);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            margin-top: var(--spacing-2);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-success), #52c263);
+            border-radius: var(--radius-sm);
+            transition: width 0.3s ease;
+        }
+
+        .progress-fill.warning {
+            background: linear-gradient(90deg, var(--color-warning), #e5b340);
+        }
+
+        .progress-fill.danger {
+            background: linear-gradient(90deg, var(--color-danger), #f05b58);
+        }
+
+        /* Section Header */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-4);
+        }
+
+        .section-title {
+            font-size: var(--font-size-xl);
+            font-weight: 700;
+            color: var(--color-text-primary);
+        }
+
+        /* Button Styles */
+        .btn {
+            padding: var(--spacing-2) var(--spacing-4);
+            border-radius: var(--radius-md);
+            font-size: var(--font-size-sm);
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid var(--color-border);
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-2);
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+        }
+
+        .btn-primary:hover {
+            background: var(--color-primary-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(107, 107, 212, 0.4);
+        }
+
+        .btn-success {
+            background: var(--color-success);
+            color: white;
+            border-color: var(--color-success);
+        }
+
+        .btn-danger {
+            background: var(--color-danger);
+            color: white;
+            border-color: var(--color-danger);
+        }
+
+        .btn-danger:hover {
+            background: #c72b2b;
+            box-shadow: 0 4px 12px rgba(218, 54, 51, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--color-border);
+            color: var(--color-text-primary);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+            background: rgba(107, 107, 212, 0.1);
+        }
+
+        /* Recording History Table */
+        .history-card {
+            background: var(--color-bg-surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            padding: var(--spacing-6);
+            border: 1px solid var(--color-border);
+        }
+
+        .filter-bar {
+            display: flex;
+            gap: var(--spacing-3);
+            align-items: center;
+            padding: var(--spacing-3);
+            background: var(--color-bg-hover);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--spacing-4);
+            border: 1px solid var(--color-border);
+        }
+
+        .filter-label {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+            font-weight: 500;
+        }
+
+        .filter-toggle {
+            display: flex;
+            gap: var(--spacing-2);
+        }
+
+        .filter-toggle input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: var(--color-primary);
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table thead {
+            background: var(--color-bg-hover);
+        }
+
+        .table th {
+            padding: var(--spacing-3) var(--spacing-4);
+            text-align: left;
+            font-size: var(--font-size-sm);
+            font-weight: 600;
+            color: var(--color-text-secondary);
+            border-bottom: 2px solid var(--color-border);
+        }
+
+        .table td {
+            padding: var(--spacing-4);
+            border-bottom: 1px solid var(--color-border-light);
+            font-size: var(--font-size-sm);
+            color: var(--color-text-primary);
+        }
+
+        .table tbody tr {
+            transition: background 0.2s;
+        }
+
+        .table tbody tr:hover {
+            background: var(--color-bg-hover);
+        }
+
+        .warning-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-1);
+            padding: var(--spacing-1) var(--spacing-2);
+            background: rgba(218, 54, 51, 0.2);
+            color: var(--color-danger);
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: var(--font-size-xs);
+            border: 1px solid rgba(218, 54, 51, 0.3);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: var(--spacing-2);
+        }
+
+        .btn-sm {
+            padding: var(--spacing-1) var(--spacing-2);
+            font-size: var(--font-size-xs);
+        }
+
+        /* Theme Badge */
+        .theme-badge {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: var(--color-bg-elevated);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: var(--shadow-lg);
+            z-index: 1000;
+            max-width: 300px;
+            border: 1px solid var(--color-border);
+        }
+
+        .theme-badge h3 {
+            margin-bottom: 10px;
+            color: var(--color-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .theme-badge ul {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--color-text-secondary);
+        }
+
+        .theme-badge li {
+            margin-left: 20px;
+            margin-bottom: 4px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: var(--spacing-4);
+            }
+
+            .header {
+                flex-direction: column;
+                gap: var(--spacing-3);
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .status-info {
+                grid-template-columns: 1fr;
+            }
+
+            .table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Badge -->
+    <div class="theme-badge">
+        <h3>🌙 Dark Theme Design</h3>
+        <ul>
+            <li>✨ Sleek dark interface</li>
+            <li>🎨 GitHub-inspired palette</li>
+            <li>👁️ Reduced eye strain</li>
+            <li>⚡ Enhanced contrast</li>
+            <li>🌟 Glowing accents</li>
+            <li>🔋 Battery-friendly</li>
+        </ul>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-logo">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                <path d="M20 5 L35 15 L35 25 L20 35 L5 25 L5 15 Z" stroke="url(#gradient)" stroke-width="2" fill="rgba(107, 107, 212, 0.1)"/>
+                <circle cx="20" cy="20" r="6" fill="url(#gradient)"/>
+                <defs>
+                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#6b6bd4;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#58a6ff;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+            </svg>
+            <h1>Rayhunter</h1>
+        </div>
+        <nav class="header-nav">
+            <a href="#" class="header-nav-item">
+                📊 Dashboard
+            </a>
+            <a href="#" class="header-nav-item">
+                📝 Logs
+            </a>
+            <a href="#" class="header-nav-item">
+                ⚙️ Settings
+            </a>
+            <a href="#" class="header-nav-item">
+                📖 Docs
+            </a>
+            <a href="#" class="header-nav-item">
+                ❤️ Donate
+            </a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Current Recording Status -->
+        <div class="status-card recording">
+            <div class="status-header">
+                <div class="status-title">
+                    <div class="status-icon success">
+                        ✓
+                    </div>
+                    <div>
+                        <h2 style="font-size: var(--font-size-2xl); font-weight: 700; margin-bottom: var(--spacing-1);">Active Recording</h2>
+                        <p style="color: var(--color-text-secondary); font-size: var(--font-size-sm);">Monitoring cellular network activity</p>
+                    </div>
+                </div>
+                <div class="status-badge success">
+                    <div class="pulse"></div>
+                    Recording
+                </div>
+            </div>
+
+            <div class="status-info">
+                <div class="info-item">
+                    <span class="info-label">Session ID</span>
+                    <span class="info-value">1714521600</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Duration</span>
+                    <span class="info-value">2h 34m</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Data Captured</span>
+                    <span class="info-value">45.2 MB</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Warnings</span>
+                    <span class="info-value" style="color: var(--color-success);">0</span>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: var(--spacing-3); margin-top: var(--spacing-4); flex-wrap: wrap;">
+                <button class="btn btn-danger">⏹ Stop Recording</button>
+                <button class="btn btn-outline">📥 Download PCAP</button>
+                <button class="btn btn-outline">📥 Download QMDL</button>
+                <button class="btn btn-outline">📦 Download ZIP</button>
+            </div>
+        </div>
+
+        <!-- System Statistics -->
+        <div class="section-header">
+            <h2 class="section-title">System Status</h2>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">Storage Available</span>
+                    <span class="stat-icon">💾</span>
+                </div>
+                <div class="stat-value">2.8 GB</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 65%;"></div>
+                </div>
+                <div class="stat-description">35% used • 6.2 GB total</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">Battery Level</span>
+                    <span class="stat-icon">🔋</span>
+                </div>
+                <div class="stat-value">85%</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 85%;"></div>
+                </div>
+                <div class="stat-description">Charging • 2h remaining</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">Memory Usage</span>
+                    <span class="stat-icon">🧠</span>
+                </div>
+                <div class="stat-value">142 MB</div>
+                <div class="progress-bar">
+                    <div class="progress-fill warning" style="width: 45%;"></div>
+                </div>
+                <div class="stat-description">45% used • 316 MB total</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">Network Signal</span>
+                    <span class="stat-icon">📶</span>
+                </div>
+                <div class="stat-value">-72 dBm</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 75%;"></div>
+                </div>
+                <div class="stat-description">Good signal strength</div>
+            </div>
+        </div>
+
+        <!-- Recording History -->
+        <div class="history-card">
+            <div class="section-header">
+                <h2 class="section-title">Recording History</h2>
+                <button class="btn btn-danger btn-sm">🗑️ Delete All</button>
+            </div>
+
+            <div class="filter-bar">
+                <span class="filter-label">Filter for Warnings</span>
+                <div class="filter-toggle">
+                    <input type="checkbox" id="filter-warnings">
+                    <label for="filter-warnings" style="font-size: var(--font-size-sm); cursor: pointer; color: var(--color-text-secondary);">Show only sessions with warnings</label>
+                </div>
+            </div>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Session ID</th>
+                        <th>Start Time</th>
+                        <th>Duration</th>
+                        <th>Size</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>1714521600</strong></td>
+                        <td>May 01, 2026 2:40 PM</td>
+                        <td>2h 34m</td>
+                        <td>45.2 MB</td>
+                        <td>
+                            <span class="status-badge success">
+                                <div class="pulse"></div>
+                                Active
+                            </span>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-primary btn-sm">📊 Analyze</button>
+                                <button class="btn btn-outline btn-sm">📥 Download</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>1714435200</strong></td>
+                        <td>Apr 30, 2026 8:20 AM</td>
+                        <td>5h 12m</td>
+                        <td>128.5 MB</td>
+                        <td>
+                            <span class="warning-badge">
+                                ⚠️ 3 Warnings
+                            </span>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-primary btn-sm">📊 View Analysis</button>
+                                <button class="btn btn-outline btn-sm">📥 Download</button>
+                                <button class="btn btn-danger btn-sm">🗑️</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>1714348800</strong></td>
+                        <td>Apr 29, 2026 4:00 PM</td>
+                        <td>3h 45m</td>
+                        <td>89.3 MB</td>
+                        <td>
+                            <span class="status-badge" style="background: rgba(132, 141, 151, 0.2); color: var(--color-text-muted); border-color: var(--color-border);">
+                                Complete
+                            </span>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-primary btn-sm">📊 View Analysis</button>
+                                <button class="btn btn-outline btn-sm">📥 Download</button>
+                                <button class="btn btn-danger btn-sm">🗑️</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
