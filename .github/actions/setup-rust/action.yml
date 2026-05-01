@@ -1,0 +1,53 @@
+name: 'Setup Rust Environment'
+description: 'Set up Rust toolchain with caching and optional cross-compilation targets'
+author: 'Rayhunter Contributors'
+
+inputs:
+  toolchain:
+    description: 'Rust toolchain to install (stable, nightly, or specific version)'
+    required: false
+    default: 'stable'
+  target:
+    description: 'Additional Rust target to install (e.g., armv7-unknown-linux-musleabihf)'
+    required: false
+  components:
+    description: 'Comma-separated list of components to install (e.g., rustfmt,clippy)'
+    required: false
+    default: ''
+  cache:
+    description: 'Enable Rust caching with Swatinem/rust-cache'
+    required: false
+    default: 'true'
+  cache-key:
+    description: 'Additional cache key for Rust cache'
+    required: false
+    default: ''
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Install Rust toolchain
+      uses: dtolnay/rust-toolchain@master
+      with:
+        toolchain: ${{ inputs.toolchain }}
+        targets: ${{ inputs.target }}
+        components: ${{ inputs.components }}
+
+    - name: Setup Rust cache
+      if: inputs.cache == 'true'
+      uses: Swatinem/rust-cache@v2
+      with:
+        key: ${{ inputs.cache-key }}
+
+    - name: Display Rust version
+      shell: bash
+      run: |
+        rustc --version
+        cargo --version
+        if [ -n "${{ inputs.target }}" ]; then
+          rustc --print target-list | grep "${{ inputs.target }}" || echo "Target ${{ inputs.target }} installed"
+        fi
+
+branding:
+  icon: 'package'
+  color: 'orange'

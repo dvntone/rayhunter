@@ -1,0 +1,46 @@
+name: 'Setup Node.js Project'
+description: 'Set up Node.js environment and install dependencies for a project'
+author: 'Rayhunter Contributors'
+
+inputs:
+  node-version:
+    description: 'Node.js version to use'
+    required: false
+    default: '20'
+  working-directory:
+    description: 'Working directory containing package.json'
+    required: true
+  cache:
+    description: 'Enable npm caching'
+    required: false
+    default: 'true'
+  install-deps:
+    description: 'Run npm install'
+    required: false
+    default: 'true'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+        cache: ${{ inputs.cache == 'true' && 'npm' || '' }}
+        cache-dependency-path: ${{ inputs.working-directory }}/package-lock.json
+
+    - name: Install dependencies
+      if: inputs.install-deps == 'true'
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      run: npm ci
+
+    - name: Display Node.js and npm versions
+      shell: bash
+      run: |
+        node --version
+        npm --version
+
+branding:
+  icon: 'package'
+  color: 'green'
