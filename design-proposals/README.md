@@ -165,6 +165,8 @@ design-proposals/
 
 **Total:** 8 files - 5 HTML mockups, 3 documentation files
 
+> **Accessibility note:** These HTML files are visual/design mockups and should not be interpreted as fully implemented or audited WCAG 2.1 AA experiences yet. In particular, color contrast, keyboard interaction details, and `prefers-reduced-motion` behavior should be validated and refined in the mockup code before making compliance claims.
+
 ---
 
 ## 🎨 Design System Highlights
