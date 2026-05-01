@@ -71,10 +71,10 @@ All crates share version `0.10.1`. The release workflow enforces that all `Cargo
 ./scripts/install-dev.sh <device>   # e.g. orbic, tplink, pinephone, uz801
 
 # Run all tests
-cargo test --verbose
+NO_FIRMWARE_BIN=true cargo test --verbose
 
 # Linting (must be clean — CI uses -Dwarnings)
-cargo clippy --verbose
+NO_FIRMWARE_BIN=true cargo clippy --verbose
 
 # Formatting check
 cargo fmt --all --check
