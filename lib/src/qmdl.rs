@@ -39,6 +39,18 @@ where
         }
         Ok(())
     }
+
+    /// Flush the underlying writer. On a GzipEncoder this triggers SYNC_FLUSH,
+    /// making all written data decompressible by concurrent readers.
+    pub async fn flush(&mut self) -> std::io::Result<()> {
+        self.writer.flush().await
+    }
+
+    /// Shutdown the underlying writer. On a GzipEncoder this writes the gzip
+    /// trailer, finalizing the stream.
+    pub async fn shutdown(&mut self) -> std::io::Result<()> {
+        self.writer.shutdown().await
+    }
 }
 
 pub struct QmdlReader<T>
@@ -91,6 +103,9 @@ where
 
         let mut buf = Vec::new();
         let bytes_read = self.reader.read_until(MESSAGE_TERMINATOR, &mut buf).await?;
+        if bytes_read == 0 {
+            return Ok(None);
+        }
         self.bytes_read += bytes_read;
 
         // Since QMDL is just a flat list of messages, we can't actually
