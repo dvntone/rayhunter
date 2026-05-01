@@ -56,6 +56,8 @@ pub struct ManifestEntry {
     pub arch: Option<String>,
     #[serde(default)]
     pub stop_reason: Option<String>,
+    #[serde(default)]
+    pub compressed: bool,
 }
 
 impl ManifestEntry {
@@ -71,12 +73,17 @@ impl ManifestEntry {
             system_os: Some(metadata.system_os),
             arch: Some(metadata.arch),
             stop_reason: None,
+            compressed: true,
         }
     }
 
     pub fn get_qmdl_filepath<P: AsRef<Path>>(&self, path: P) -> PathBuf {
         let mut filepath = path.as_ref().join(&self.name);
-        filepath.set_extension("qmdl");
+        if self.compressed {
+            filepath.set_extension("qmdl.gz");
+        } else {
+            filepath.set_extension("qmdl");
+        }
         filepath
     }
 
@@ -163,11 +170,13 @@ impl RecordingStore {
                 continue;
             };
 
-            if !filename.ends_with(".qmdl") {
+            let (stem, compressed) = if filename.ends_with(".qmdl.gz") {
+                (filename.trim_end_matches(".qmdl.gz"), true)
+            } else if filename.ends_with(".qmdl") {
+                (filename.trim_end_matches(".qmdl"), false)
+            } else {
                 continue;
-            }
-
-            let stem = filename.trim_end_matches(".qmdl");
+            };
             let Ok(start_timestamp) = stem.parse::<i64>() else {
                 warn!("QMDL file has invalid name {os_filename:?}, skipping");
                 continue;
@@ -201,6 +210,7 @@ impl RecordingStore {
                 system_os: None,
                 arch: None,
                 stop_reason: None,
+                compressed,
             });
         }
 

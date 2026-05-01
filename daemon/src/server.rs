@@ -1,4 +1,5 @@
 use anyhow::Error;
+use async_compression::tokio::bufread::GzipDecoder;
 use async_zip::Compression;
 use async_zip::ZipEntryBuilder;
 use async_zip::tokio::write::ZipFileWriter;
@@ -14,7 +15,7 @@ use log::{error, warn};
 use serde::{Deserialize, Serialize};
 use std::sync::Arc;
 use tokio::fs::write;
-use tokio::io::{AsyncReadExt, copy, duplex};
+use tokio::io::{AsyncRead, AsyncReadExt, BufReader, copy, duplex};
 use tokio::sync::RwLock;
 use tokio::sync::mpsc::Sender;
 use tokio_util::compat::FuturesAsyncWriteCompatExt;
@@ -49,6 +50,8 @@ pub async fn get_qmdl(
         StatusCode::NOT_FOUND,
         format!("couldn't find qmdl file with name {qmdl_idx}"),
     ))?;
+    let qmdl_size_bytes = entry.qmdl_size_bytes;
+    let compressed = entry.compressed;
     let qmdl_file = qmdl_store
         .open_entry_qmdl(entry_index)
         .await
@@ -58,12 +61,17 @@ pub async fn get_qmdl(
                 format!("error opening QMDL file: {err}"),
             )
         })?;
-    let limited_qmdl_file = qmdl_file.take(entry.qmdl_size_bytes as u64);
-    let qmdl_stream = ReaderStream::new(limited_qmdl_file);
+    // Decompress on-the-fly for compressed entries, transparent to clients.
+    let qmdl_source: Box<dyn AsyncRead + Unpin + Send> = if compressed {
+        Box::new(GzipDecoder::new(BufReader::new(qmdl_file)).take(qmdl_size_bytes as u64))
+    } else {
+        Box::new(qmdl_file.take(qmdl_size_bytes as u64))
+    };
+    let qmdl_stream = ReaderStream::new(qmdl_source);
 
     let headers = [
         (CONTENT_TYPE, "application/octet-stream"),
-        (CONTENT_LENGTH, &entry.qmdl_size_bytes.to_string()),
+        (CONTENT_LENGTH, &qmdl_size_bytes.to_string()),
     ];
     let body = Body::from_stream(qmdl_stream);
     Ok((headers, body).into_response())
