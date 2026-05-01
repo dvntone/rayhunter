@@ -111,7 +111,7 @@ npm test        # vitest
 ### Docker Build
 
 ```bash
-./docker_make.sh   # Builds in rust:1.86-bullseye container for reproducible ARM builds
+./scripts/build-dev.sh   # Supported development build flow
 ```
 
 ### Environment Variables
