@@ -10,6 +10,7 @@
 - [Configuration](./configuration.md)
 - [Uninstalling](./uninstalling.md)
 - [Using Rayhunter](./using-rayhunter.md)
+  - [ADB Shell Usage](./adb-shell-usage.md)
   - [Rayhunter's heuristics](./heuristics.md)
   - [Re-analyzing recordings](./reanalyzing.md)
   - [How we analyze a capture](./analyzing-a-capture.md)

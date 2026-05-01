@@ -50,3 +50,5 @@ The password (in place of `mypassword`) is under the battery.
 ```sh
 ./installer util orbic-shell
 ```
+
+For more detailed information about ADB shell usage, troubleshooting, and advanced commands, see the [ADB Shell Usage guide](./adb-shell-usage.md).

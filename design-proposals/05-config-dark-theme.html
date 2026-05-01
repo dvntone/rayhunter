@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rayhunter Configuration - Dark Theme</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #0f1419;
+            color: #e6edf3;
+            padding: 2rem;
+        }
+
+        :root {
+            --color-primary: #6b6bd4;
+            --color-primary-dark: #5858c0;
+            --color-success: #3fb950;
+            --color-info: #58a6ff;
+            --color-warning: #d29922;
+            --color-danger: #da3633;
+
+            --color-bg-base: #0f1419;
+            --color-bg-surface: #161b22;
+            --color-bg-elevated: #1c2128;
+            --color-bg-hover: #21262d;
+
+            --color-text-primary: #e6edf3;
+            --color-text-secondary: #848d97;
+            --color-text-muted: #57606a;
+
+            --color-border: #30363d;
+            --color-border-light: #21262d;
+
+            --spacing-2: 0.5rem;
+            --spacing-3: 0.75rem;
+            --spacing-4: 1rem;
+            --spacing-6: 1.5rem;
+            --spacing-8: 2rem;
+
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .page-header {
+            background: var(--color-bg-surface);
+            padding: var(--spacing-6);
+            border-radius: var(--radius-lg);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+            margin-bottom: var(--spacing-6);
+            border: 1px solid var(--color-border);
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-info));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: var(--spacing-2);
+        }
+
+        .page-description {
+            color: var(--color-text-secondary);
+            font-size: 1rem;
+        }
+
+        .config-card {
+            background: var(--color-bg-surface);
+            border-radius: var(--radius-lg);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+            margin-bottom: var(--spacing-6);
+            overflow: hidden;
+            border: 1px solid var(--color-border);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--color-bg-elevated), var(--color-bg-surface));
+            color: var(--color-text-primary);
+            padding: var(--spacing-6);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-3);
+            cursor: pointer;
+            transition: all 0.3s;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .card-header:hover {
+            background: linear-gradient(135deg, #252c35, var(--color-bg-elevated));
+        }
+
+        .card-icon {
+            font-size: 2rem;
+        }
+
+        .card-title-group {
+            flex: 1;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .card-subtitle {
+            font-size: 0.875rem;
+            color: var(--color-text-secondary);
+        }
+
+        .chevron {
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+            color: var(--color-text-secondary);
+        }
+
+        .chevron.expanded {
+            transform: rotate(180deg);
+        }
+
+        .card-body {
+            padding: var(--spacing-6);
+        }
+
+        .form-section {
+            margin-bottom: var(--spacing-8);
+        }
+
+        .form-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-divider {
+            height: 1px;
+            background: var(--color-border);
+            margin: var(--spacing-6) 0;
+        }
+
+        .form-group {
+            margin-bottom: var(--spacing-6);
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: var(--color-text-primary);
+            margin-bottom: var(--spacing-2);
+            font-size: 0.875rem;
+        }
+
+        .form-label .required {
+            color: var(--color-danger);
+        }
+
+        .form-help {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--color-text-secondary);
+            margin-top: var(--spacing-2);
+            line-height: 1.5;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: var(--spacing-3) var(--spacing-4);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            transition: all 0.2s;
+            font-family: inherit;
+            background: var(--color-bg-base);
+            color: var(--color-text-primary);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(107, 107, 212, 0.2);
+        }
+
+        .form-control:hover {
+            border-color: var(--color-text-muted);
+        }
+
+        .form-select {
+            background: var(--color-bg-base);
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%23848d97' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            padding-right: 3rem;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-3);
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-3);
+            padding: var(--spacing-3);
+            border-radius: var(--radius-md);
+            transition: background 0.2s;
+        }
+
+        .checkbox-item:hover {
+            background: var(--color-bg-hover);
+        }
+
+        .checkbox-input {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: var(--color-primary);
+        }
+
+        .checkbox-label {
+            cursor: pointer;
+            user-select: none;
+            flex: 1;
+            color: var(--color-text-primary);
+        }
+
+        .checkbox-description {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--color-text-secondary);
+            margin-top: 0.25rem;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-addon {
+            position: absolute;
+            right: var(--spacing-3);
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--color-text-secondary);
+            font-size: 0.875rem;
+            pointer-events: none;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: var(--spacing-3);
+            margin-top: var(--spacing-6);
+        }
+
+        .btn {
+            padding: var(--spacing-3) var(--spacing-6);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid var(--color-border);
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-2);
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+        }
+
+        .btn-primary:hover {
+            background: var(--color-primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(107, 107, 212, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--color-bg-elevated);
+            color: var(--color-text-primary);
+            border-color: var(--color-border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--color-bg-hover);
+            border-color: var(--color-text-muted);
+        }
+
+        .btn-test {
+            background: var(--color-info);
+            color: white;
+            border-color: var(--color-info);
+        }
+
+        .btn-test:hover {
+            background: #4493db;
+            box-shadow: 0 6px 12px rgba(88, 166, 255, 0.4);
+        }
+
+        .alert {
+            padding: var(--spacing-4);
+            border-radius: var(--radius-md);
+            margin-top: var(--spacing-4);
+            display: flex;
+            align-items: start;
+            gap: var(--spacing-3);
+            border: 1px solid;
+        }
+
+        .alert-success {
+            background: rgba(63, 185, 80, 0.1);
+            border-color: rgba(63, 185, 80, 0.3);
+            color: var(--color-success);
+        }
+
+        .alert-info {
+            background: rgba(88, 166, 255, 0.1);
+            border-color: rgba(88, 166, 255, 0.3);
+            color: var(--color-info);
+        }
+
+        .alert-warning {
+            background: rgba(210, 153, 34, 0.1);
+            border-color: rgba(210, 153, 34, 0.3);
+            color: var(--color-warning);
+        }
+
+        .alert-icon {
+            font-size: 1.5rem;
+        }
+
+        .alert-content {
+            color: var(--color-text-primary);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-4);
+        }
+
+        .feature-card {
+            padding: var(--spacing-4);
+            background: var(--color-bg-hover);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--color-border);
+            transition: all 0.2s;
+        }
+
+        .feature-card:hover {
+            border-color: var(--color-primary);
+            box-shadow: 0 4px 12px rgba(107, 107, 212, 0.2);
+        }
+
+        .feature-card.active {
+            background: rgba(107, 107, 212, 0.1);
+            border-color: var(--color-primary);
+        }
+
+        .feature-card h4 {
+            color: var(--color-text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            font-size: 0.875rem;
+            color: var(--color-text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">⚙️ Configuration</h1>
+            <p class="page-description">Customize your Rayhunter device settings, notification preferences, and analysis heuristics.</p>
+        </div>
+
+        <!-- Device Settings Card -->
+        <div class="config-card">
+            <div class="card-header">
+                <span class="card-icon">📱</span>
+                <div class="card-title-group">
+                    <h2 class="card-title">Device Settings</h2>
+                    <p class="card-subtitle">Display, input, and accessibility options</p>
+                </div>
+                <span class="chevron expanded">▼</span>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label class="form-label" for="ui-level">
+                        Device UI Level
+                    </label>
+                    <select id="ui-level" class="form-control form-select">
+                        <option value="0">Level 0 - Invisible Mode (No visual feedback)</option>
+                        <option value="1">Level 1 - Subtle Mode (Colored line indicator)</option>
+                        <option value="2" selected>Level 2 - Demo Mode (Animated orca gif)</option>
+                        <option value="3">Level 3 - EFF Logo (Organization branding)</option>
+                        <option value="4">Level 4 - High Visibility (Full screen color alerts)</option>
+                    </select>
+                    <span class="form-help">
+                        ⚠️ Note: Rayhunter overlays its UI on the device's native interface, which may cause occasional flickering.
+                    </span>
+                </div>
+
+                <div class="section-divider"></div>
+
+                <div class="form-group">
+                    <label class="form-label" for="input-mode">
+                        Device Input Mode
+                    </label>
+                    <select id="input-mode" class="form-control form-select">
+                        <option value="0">Disabled - No button control</option>
+                        <option value="1" selected>Enabled - Double-tap power button to start/stop</option>
+                    </select>
+                    <span class="form-help">
+                        Configure how you interact with your Rayhunter device using physical buttons.
+                    </span>
+                </div>
+
+                <div class="section-divider"></div>
+
+                <div class="form-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="colorblind-mode" class="checkbox-input" checked>
+                        <label class="checkbox-label" for="colorblind-mode">
+                            <strong>Colorblind Mode</strong>
+                            <span class="checkbox-description">Use patterns and shapes in addition to colors for status indicators</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notification Settings Card -->
+        <div class="config-card">
+            <div class="card-header">
+                <span class="card-icon">🔔</span>
+                <div class="card-title-group">
+                    <h2 class="card-title">Notification Settings</h2>
+                    <p class="card-subtitle">Configure alerts and push notifications</p>
+                </div>
+                <span class="chevron expanded">▼</span>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label class="form-label" for="ntfy-url">
+                        ntfy Server URL
+                    </label>
+                    <input
+                        type="url"
+                        id="ntfy-url"
+                        class="form-control"
+                        placeholder="https://ntfy.sh/your-topic"
+                        value="https://ntfy.sh/rayhunter-alerts"
+                    >
+                    <span class="form-help">
+                        Enter your ntfy.sh topic URL to receive push notifications. Leave empty to disable notifications.
+                    </span>
+                </div>
+
+                <div class="alert alert-info">
+                    <span class="alert-icon">ℹ️</span>
+                    <div class="alert-content">
+                        <strong>Test notifications use the saved configuration</strong>
+                        <p style="margin-top: 0.5rem; font-size: 0.875rem;">The test button sends a notification to the URL saved in your configuration, not the value currently in the input field above.</p>
+                    </div>
+                </div>
+
+                <button class="btn btn-test">
+                    📤 Send Test Notification
+                </button>
+
+                <div class="section-divider"></div>
+
+                <div class="form-group">
+                    <label class="form-label">Enabled Notification Types</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="notify-warnings" class="checkbox-input" checked>
+                            <label class="checkbox-label" for="notify-warnings">
+                                <strong>⚠️ Warning Notifications</strong>
+                                <span class="checkbox-description">Receive alerts when potential IMSI catcher activity is detected</span>
+                            </label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="notify-battery" class="checkbox-input" checked>
+                            <label class="checkbox-label" for="notify-battery">
+                                <strong>🔋 Low Battery Alerts</strong>
+                                <span class="checkbox-description">Get notified when device battery is running low</span>
+                            </label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="notify-storage" class="checkbox-input">
+                            <label class="checkbox-label" for="notify-storage">
+                                <strong>💾 Storage Warnings</strong>
+                                <span class="checkbox-description">Alert when available storage is running low</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Storage Management Card -->
+        <div class="config-card">
+            <div class="card-header">
+                <span class="card-icon">💾</span>
+                <div class="card-title-group">
+                    <h2 class="card-title">Storage Management</h2>
+                    <p class="card-subtitle">Configure recording storage thresholds</p>
+                </div>
+                <span class="chevron expanded">▼</span>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label class="form-label" for="min-start">
+                        Minimum Space to Start Recording
+                    </label>
+                    <div class="input-group">
+                        <input
+                            type="number"
+                            id="min-start"
+                            class="form-control"
+                            value="500"
+                            min="1"
+                            step="10"
+                        >
+                        <span class="input-addon">MB</span>
+                    </div>
+                    <span class="form-help">
+                        Recording will not begin if available disk space is below this threshold.
+                    </span>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="min-continue">
+                        Minimum Space to Continue Recording
+                    </label>
+                    <div class="input-group">
+                        <input
+                            type="number"
+                            id="min-continue"
+                            class="form-control"
+                            value="100"
+                            min="1"
+                            step="10"
+                        >
+                        <span class="input-addon">MB</span>
+                    </div>
+                    <span class="form-help">
+                        Active recordings will automatically stop if disk space drops below this level.
+                    </span>
+                </div>
+
+                <div class="alert alert-warning">
+                    <span class="alert-icon">⚠️</span>
+                    <div class="alert-content">
+                        <strong>Storage Threshold Recommendation</strong>
+                        <p style="margin-top: 0.5rem; font-size: 0.875rem;">Ensure "Start" threshold is higher than "Continue" threshold to prevent recording loops. Recommended: Start ≥ 500MB, Continue ≥ 100MB.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analyzer Heuristics Card -->
+        <div class="config-card">
+            <div class="card-header">
+                <span class="card-icon">🔍</span>
+                <div class="card-title-group">
+                    <h2 class="card-title">Analyzer Heuristics</h2>
+                    <p class="card-subtitle">Enable or disable detection algorithms</p>
+                </div>
+                <span class="chevron expanded">▼</span>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info">
+                    <span class="alert-icon">ℹ️</span>
+                    <div class="alert-content">
+                        <strong>About Heuristics</strong>
+                        <p style="margin-top: 0.5rem; font-size: 0.875rem;">Each heuristic detects specific suspicious patterns in cellular network behavior. Enable only the heuristics relevant to your use case to reduce false positives.</p>
+                    </div>
+                </div>
+
+                <div class="feature-grid">
+                    <div class="feature-card active">
+                        <input type="checkbox" id="h-imsi" class="checkbox-input" checked style="float: right;" aria-labelledby="h-imsi-title">
+                        <h4 id="h-imsi-title">📱 IMSI Requested</h4>
+                        <p>Detects when the network requests your device's IMSI number</p>
+                    </div>
+
+                    <div class="feature-card active">
+                        <input type="checkbox" id="h-2g-down" class="checkbox-input" checked style="float: right;" aria-labelledby="h-2g-down-title">
+                        <h4 id="h-2g-down-title">📉 2G Downgrade</h4>
+                        <p>Alerts on suspicious downgrades to 2G networks</p>
+                    </div>
+
+                    <div class="feature-card active">
+                        <input type="checkbox" id="h-sib" class="checkbox-input" checked style="float: right;" aria-labelledby="h-sib-title">
+                        <h4 id="h-sib-title">📊 LTE SIB6/7</h4>
+                        <p>Monitors LTE system information broadcasts</p>
+                    </div>
+
+                    <div class="feature-card active">
+                        <input type="checkbox" id="h-null" class="checkbox-input" checked style="float: right;" aria-labelledby="h-null-title">
+                        <h4 id="h-null-title">🔓 Null Cipher</h4>
+                        <p>Detects unencrypted connections</p>
+                    </div>
+
+                    <div class="feature-card active">
+                        <input type="checkbox" id="h-nas-null" class="checkbox-input" checked style="float: right;" aria-labelledby="h-nas-null-title">
+                        <h4 id="h-nas-null-title">🔐 NAS Null Cipher</h4>
+                        <p>Checks for unencrypted NAS messages</p>
+                    </div>
+
+                    <div class="feature-card active">
+                        <input type="checkbox" id="h-incomplete" class="checkbox-input" checked style="float: right;" aria-labelledby="h-incomplete-title">
+                        <h4 id="h-incomplete-title">⚠️ Incomplete SIB</h4>
+                        <p>Identifies incomplete system information</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <input type="checkbox" id="h-test" class="checkbox-input" style="float: right;" aria-labelledby="h-test-title">
+                        <h4 id="h-test-title" style="color: var(--color-text-muted);">🧪 Test Analyzer</h4>
+                        <p><strong>Warning:</strong> Very noisy, for testing only</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <input type="checkbox" id="h-diagnostic" class="checkbox-input" style="float: right;" aria-labelledby="h-diagnostic-title">
+                        <h4 id="h-diagnostic-title" style="color: var(--color-text-muted);">🔧 Diagnostic</h4>
+                        <p>Advanced diagnostic analyzer</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="btn-group">
+            <button class="btn btn-primary">
+                ✓ Save Configuration & Restart
+            </button>
+            <button class="btn btn-secondary">
+                ↺ Reset to Defaults
+            </button>
+        </div>
+
+        <div class="alert alert-success" style="margin-top: var(--spacing-6);">
+            <span class="alert-icon">✓</span>
+            <div class="alert-content">
+                <strong>Configuration saved successfully!</strong>
+                <p style="margin-top: 0.5rem; font-size: 0.875rem;">Rayhunter is restarting now. Please reload this page in a few seconds.</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Collapse/expand card sections
+        document.querySelectorAll('.card-header').forEach(function(header, index) {
+            var body = header.nextElementSibling;
+            var chevron = header.querySelector('.chevron');
+            var bodyId = 'card-body-dark-' + index;
+            body.id = bodyId;
+            header.setAttribute('role', 'button');
+            header.setAttribute('tabindex', '0');
+            header.setAttribute('aria-expanded', 'true');
+            header.setAttribute('aria-controls', bodyId);
+
+            function toggle() {
+                var expanded = header.getAttribute('aria-expanded') === 'true';
+                header.setAttribute('aria-expanded', String(!expanded));
+                body.style.display = expanded ? 'none' : '';
+                if (chevron) {
+                    if (expanded) {
+                        chevron.classList.remove('expanded');
+                    } else {
+                        chevron.classList.add('expanded');
+                    }
+                }
+            }
+
+            header.addEventListener('click', toggle);
+            header.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggle();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

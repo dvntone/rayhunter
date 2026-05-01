@@ -47,3 +47,5 @@ enabled. Instead you can use `./installer util orbic-shell`.
 If you are using an installer prior to 0.7.0 or `orbic-usb` explicitly, you can
 obtain a root shell by running `adb shell` or `./installer util shell`. Then,
 inside of that shell you can run `/bin/rootshell` to obtain "fakeroot."
+
+For more detailed information about ADB shell usage, troubleshooting, and advanced commands, see the [ADB Shell Usage guide](./adb-shell-usage.md).

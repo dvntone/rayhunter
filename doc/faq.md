@@ -49,6 +49,8 @@ reboot
 
 See `/data/usb/boot_hsusb_composition` for a list of USB modes and Android USB gadget settings.
 
+For more information on ADB shell usage and troubleshooting, see the [ADB Shell Usage guide](./adb-shell-usage.md).
+
 
 ### How do I disable the WiFi hotspot on the Orbic RC400L?
 
