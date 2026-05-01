@@ -619,50 +619,50 @@
 
                 <div class="feature-grid">
                     <div class="feature-card active">
-                        <input type="checkbox" id="h-imsi" class="checkbox-input" checked style="float: right;">
-                        <h4>📱 IMSI Requested</h4>
+                        <input type="checkbox" id="h-imsi" class="checkbox-input" checked style="float: right;" aria-labelledby="h-imsi-title">
+                        <h4 id="h-imsi-title">📱 IMSI Requested</h4>
                         <p>Detects when the network requests your device's IMSI number</p>
                     </div>
 
                     <div class="feature-card active">
-                        <input type="checkbox" id="h-2g-down" class="checkbox-input" checked style="float: right;">
-                        <h4>📉 2G Downgrade</h4>
+                        <input type="checkbox" id="h-2g-down" class="checkbox-input" checked style="float: right;" aria-labelledby="h-2g-down-title">
+                        <h4 id="h-2g-down-title">📉 2G Downgrade</h4>
                         <p>Alerts on suspicious downgrades to 2G networks</p>
                     </div>
 
                     <div class="feature-card active">
-                        <input type="checkbox" id="h-sib" class="checkbox-input" checked style="float: right;">
-                        <h4>📊 LTE SIB6/7</h4>
+                        <input type="checkbox" id="h-sib" class="checkbox-input" checked style="float: right;" aria-labelledby="h-sib-title">
+                        <h4 id="h-sib-title">📊 LTE SIB6/7</h4>
                         <p>Monitors LTE system information broadcasts</p>
                     </div>
 
                     <div class="feature-card active">
-                        <input type="checkbox" id="h-null" class="checkbox-input" checked style="float: right;">
-                        <h4>🔓 Null Cipher</h4>
+                        <input type="checkbox" id="h-null" class="checkbox-input" checked style="float: right;" aria-labelledby="h-null-title">
+                        <h4 id="h-null-title">🔓 Null Cipher</h4>
                         <p>Detects unencrypted connections</p>
                     </div>
 
                     <div class="feature-card active">
-                        <input type="checkbox" id="h-nas-null" class="checkbox-input" checked style="float: right;">
-                        <h4>🔐 NAS Null Cipher</h4>
+                        <input type="checkbox" id="h-nas-null" class="checkbox-input" checked style="float: right;" aria-labelledby="h-nas-null-title">
+                        <h4 id="h-nas-null-title">🔐 NAS Null Cipher</h4>
                         <p>Checks for unencrypted NAS messages</p>
                     </div>
 
                     <div class="feature-card active">
-                        <input type="checkbox" id="h-incomplete" class="checkbox-input" checked style="float: right;">
-                        <h4>⚠️ Incomplete SIB</h4>
+                        <input type="checkbox" id="h-incomplete" class="checkbox-input" checked style="float: right;" aria-labelledby="h-incomplete-title">
+                        <h4 id="h-incomplete-title">⚠️ Incomplete SIB</h4>
                         <p>Identifies incomplete system information</p>
                     </div>
 
                     <div class="feature-card">
-                        <input type="checkbox" id="h-test" class="checkbox-input" style="float: right;">
-                        <h4 style="color: var(--color-text-muted);">🧪 Test Analyzer</h4>
+                        <input type="checkbox" id="h-test" class="checkbox-input" style="float: right;" aria-labelledby="h-test-title">
+                        <h4 id="h-test-title" style="color: var(--color-text-muted);">🧪 Test Analyzer</h4>
                         <p><strong>Warning:</strong> Very noisy, for testing only</p>
                     </div>
 
                     <div class="feature-card">
-                        <input type="checkbox" id="h-diagnostic" class="checkbox-input" style="float: right;">
-                        <h4 style="color: var(--color-text-muted);">🔧 Diagnostic</h4>
+                        <input type="checkbox" id="h-diagnostic" class="checkbox-input" style="float: right;" aria-labelledby="h-diagnostic-title">
+                        <h4 id="h-diagnostic-title" style="color: var(--color-text-muted);">🔧 Diagnostic</h4>
                         <p>Advanced diagnostic analyzer</p>
                     </div>
                 </div>
@@ -687,5 +687,39 @@
             </div>
         </div>
     </div>
+    <script>
+        // Collapse/expand card sections
+        document.querySelectorAll('.card-header').forEach(function(header, index) {
+            var body = header.nextElementSibling;
+            var chevron = header.querySelector('.chevron');
+            var bodyId = 'card-body-dark-' + index;
+            body.id = bodyId;
+            header.setAttribute('role', 'button');
+            header.setAttribute('tabindex', '0');
+            header.setAttribute('aria-expanded', 'true');
+            header.setAttribute('aria-controls', bodyId);
+
+            function toggle() {
+                var expanded = header.getAttribute('aria-expanded') === 'true';
+                header.setAttribute('aria-expanded', String(!expanded));
+                body.style.display = expanded ? 'none' : '';
+                if (chevron) {
+                    if (expanded) {
+                        chevron.classList.remove('expanded');
+                    } else {
+                        chevron.classList.add('expanded');
+                    }
+                }
+            }
+
+            header.addEventListener('click', toggle);
+            header.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggle();
+                }
+            });
+        });
+    </script>
 </body>
 </html>

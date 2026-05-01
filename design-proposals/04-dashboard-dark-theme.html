@@ -219,6 +219,12 @@
             50% { opacity: 0.5; }
         }
 
+        @media (prefers-reduced-motion: reduce) {
+            .pulse {
+                animation: none;
+            }
+        }
+
         .status-info {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));

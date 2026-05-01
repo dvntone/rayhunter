@@ -19,7 +19,7 @@ After thorough code analysis, here are the findings regarding Orbic device UI ca
 #### What EXISTS in the Codebase:
 
 1. **Display State API Endpoint** (`/api/debug/display-state`)
-   - Location: `daemon/src/server.rs:302-323`
+   - Route wiring: `daemon/src/main.rs` (handler implementation: `daemon/src/server.rs:302-323`)
    - Allows sending DisplayState updates to device
    - Limited to 3 enum states: Recording, Paused, WarningDetected
    - Currently used for debugging
@@ -57,7 +57,7 @@ pub enum DisplayState {
 **Pros:**
 - Leverages existing architecture
 - One-way communication (web → device)
-- No new API endpoints needed
+- Minimal API surface change (extends existing debug endpoint)
 
 **Cons:**
 - Display limited to 128x128 pixels (small text area)

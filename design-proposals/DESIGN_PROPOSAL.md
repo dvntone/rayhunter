@@ -43,7 +43,7 @@ This document outlines a comprehensive UI/UX improvement plan for Rayhunter's we
 - No multi-page navigation
 - Collapsible sections for different features
 
-### Current Components (18 total)
+### Current Components (17 total)
 ```
 Data Display:
 ├── ManifestCard.svelte
@@ -907,23 +907,23 @@ Alerts/Info:
 **Priority: Critical**
 
 **Tasks:**
-1. ✅ Implement design system
+1. [ ] Implement design system
    - Create CSS custom properties file
    - Define all tokens (colors, spacing, typography)
    - Set up Tailwind config with custom values
 
-2. ✅ Fix accessibility violations
+2. [ ] Fix accessibility violations
    - Update color contrasts (green/red badges)
    - Add missing ARIA labels
    - Implement keyboard navigation
 
-3. ✅ Create base components
+3. [ ] Create base components
    - Button component (all variants)
    - Card component (all variants)
    - Form components (input, select, checkbox)
    - Alert component
 
-4. ✅ Mobile responsiveness audit
+4. [ ] Mobile responsiveness audit
    - Test on 320px, 375px, 768px, 1024px
    - Fix layout issues
    - Implement responsive breakpoints
@@ -940,22 +940,22 @@ Alerts/Info:
 **Priority: High**
 
 **Tasks:**
-1. ✅ Redesign header
+1. [ ] Redesign header
    - Implement gradient background
    - Add sticky positioning
    - Create responsive navigation
 
-2. ✅ Improve status card
+2. [ ] Improve status card
    - Add pulse animation
    - Implement hover effects
    - Better mobile layout
 
-3. ✅ Enhance stats grid
+3. [ ] Enhance stats grid
    - Card-based design
    - Progress bar visualizations
    - Hover animations
 
-4. ✅ Redesign history table
+4. [ ] Redesign history table
    - Better spacing and typography
    - Row hover effects
    - Mobile card view
@@ -972,17 +972,17 @@ Alerts/Info:
 **Priority: High**
 
 **Tasks:**
-1. ✅ Redesign config form
+1. [ ] Redesign config form
    - Collapsible sections
    - Grid-based heuristics
    - Better form validation
 
-2. ✅ Improve form components
+2. [ ] Improve form components
    - Custom styled inputs
    - Better error states
    - Helpful descriptions
 
-3. ✅ Add visual feedback
+3. [ ] Add visual feedback
    - Success/error alerts
    - Loading states
    - Progress indicators
@@ -999,22 +999,22 @@ Alerts/Info:
 **Priority: Medium**
 
 **Tasks:**
-1. ✅ Implement loading states
+1. [ ] Implement loading states
    - Skeleton screens
    - Progressive loading
    - Lazy loading images
 
-2. ✅ Optimize polling
+2. [ ] Optimize polling
    - Implement exponential backoff
    - Add visibility API usage
    - Request cancellation
 
-3. ✅ Add transitions
+3. [ ] Add transitions
    - Page transitions
    - Component animations
    - Micro-interactions
 
-4. ✅ Final polish
+4. [ ] Final polish
    - Animation timing refinement
    - Cross-browser testing
    - Performance audit
@@ -1031,17 +1031,17 @@ Alerts/Info:
 **Priority: Low**
 
 **Tasks:**
-1. ✅ Component documentation
+1. [ ] Component documentation
    - Usage examples
    - API documentation
    - Design guidelines
 
-2. ✅ Developer guide
+2. [ ] Developer guide
    - Setup instructions
    - Build process
    - Contribution guidelines
 
-3. ✅ User guide
+3. [ ] User guide
    - Feature documentation
    - Screenshots
    - Video tutorials
@@ -1057,22 +1057,22 @@ Alerts/Info:
 ## 📊 Success Metrics
 
 ### User Experience Metrics
-- ✅ Mobile usability score: Target 90+
-- ✅ Lighthouse accessibility score: Target 95+
-- ✅ Page load time: Target < 2s
-- ✅ Time to interactive: Target < 3s
+- [ ] Mobile usability score: Target 90+
+- [ ] Lighthouse accessibility score: Target 95+
+- [ ] Page load time: Target < 2s
+- [ ] Time to interactive: Target < 3s
 
 ### Design Metrics
-- ✅ Color contrast ratio: All text meets WCAG AA
-- ✅ Component reusability: 80%+ of UI uses design system
-- ✅ Consistency score: 95%+ consistent spacing/typography
-- ✅ Mobile responsive: 100% features work on mobile
+- [ ] Color contrast ratio: All text meets WCAG AA
+- [ ] Component reusability: 80%+ of UI uses design system
+- [ ] Consistency score: 95%+ consistent spacing/typography
+- [ ] Mobile responsive: 100% features work on mobile
 
 ### Development Metrics
-- ✅ Code coverage: Target 70%+
-- ✅ Bundle size: Target < 500KB
-- ✅ CSS custom properties usage: 100%
-- ✅ Component documentation: 100% of components
+- [ ] Code coverage: Target 70%+
+- [ ] Bundle size: Target < 500KB
+- [ ] CSS custom properties usage: 100%
+- [ ] Component documentation: 100% of components
 
 ---
 

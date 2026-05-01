@@ -167,13 +167,14 @@
         .warning-notification {
             position: absolute;
             top: 20px;
-            right: -400px;
+            right: 20px;
             width: 350px;
             background: white;
             border-left: 4px solid var(--color-danger);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
             border-radius: 8px;
             padding: 1.5rem;
+            transform: translateX(420px);
             animation: slide-in 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards,
                        slide-out 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) 4.5s forwards;
         }
@@ -202,13 +203,13 @@
 
         @keyframes slide-in {
             to {
-                right: 20px;
+                transform: translateX(0);
             }
         }
 
         @keyframes slide-out {
             to {
-                right: -400px;
+                transform: translateX(420px);
             }
         }
 
@@ -457,7 +458,7 @@
 
             .warning-notification {
                 animation: none;
-                right: 20px; /* show in final position immediately */
+                transform: translateX(0); /* show in final position immediately */
             }
 
             .progress-bar-fill {
@@ -605,10 +606,11 @@
             <div class="code-block">
 <span class="code-comment">/* CSS Implementation */</span>
 @keyframes slide-in {
-    to { right: 20px; }
+    to { transform: translateX(0); }
 }
 
 .warning-notification {
+    transform: translateX(420px);
     animation: slide-in 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
 }
             </div>

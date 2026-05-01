@@ -122,7 +122,7 @@ This directory contains comprehensive UI/UX design proposals for the Rayhunter w
    python3 -m http.server 8000
 
    # Node.js (if you have http-server installed)
-   npx http-server
+   npx http-server -p 8000
 
    # Then open http://localhost:8000 in your browser
    ```
@@ -210,14 +210,16 @@ design-proposals/
 
 ## ♿ Accessibility Features
 
-All designs meet **WCAG 2.1 Level AA** requirements:
+These mockups target **WCAG 2.1 Level AA** compliance. Key improvements implemented:
 
-✅ **Color Contrast:** All text meets 4.5:1 minimum ratio
-✅ **Keyboard Navigation:** Full keyboard support
-✅ **Screen Readers:** Proper ARIA labels and semantic HTML
-✅ **Motion Preferences:** Respects prefers-reduced-motion
-✅ **Focus Indicators:** Visible focus states on all interactive elements
-✅ **Colorblind Friendly:** Icons + patterns, not color alone
+- [ ] **Color Contrast:** Text targeting 4.5:1 minimum ratio (verify with tooling before claiming compliance)
+- [ ] **Keyboard Navigation:** Full keyboard support
+- [ ] **Screen Readers:** Proper ARIA labels and semantic HTML
+- [ ] **Motion Preferences:** `prefers-reduced-motion` media queries applied
+- [ ] **Focus Indicators:** Visible focus states on interactive elements
+- [ ] **Colorblind Friendly:** Icons + patterns, not color alone
+
+> **Note:** These are design proposal mockups. A formal WCAG audit should be completed before claiming full compliance in production.
 
 ---
 
