@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rayhunter UI Animations - Proposed Designs</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f7fa;
+            color: #2d3748;
+            padding: 2rem;
+        }
+
+        :root {
+            --color-primary: #4e4eb1;
+            --color-success: #48bb78;
+            --color-warning: #ed8936;
+            --color-danger: #f56565;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .demo-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .demo-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--color-primary);
+        }
+
+        .demo-description {
+            color: #718096;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Animation 1: Status Pulse */
+        .status-indicator {
+            width: 200px;
+            height: 200px;
+            margin: 2rem auto;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pulse-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 4px solid var(--color-success);
+            animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        .pulse-ring:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+
+        .pulse-ring:nth-child(3) {
+            animation-delay: 1s;
+        }
+
+        .status-icon {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            background: var(--color-success);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+            box-shadow: 0 8px 16px rgba(72, 187, 120, 0.3);
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                transform: scale(0.8);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.4);
+                opacity: 0;
+            }
+        }
+
+        /* Animation 2: Loading Skeleton */
+        .skeleton-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        .skeleton {
+            background: linear-gradient(
+                90deg,
+                #f0f0f0 0%,
+                #f8f8f8 50%,
+                #f0f0f0 100%
+            );
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s ease-in-out infinite;
+            border-radius: 4px;
+        }
+
+        .skeleton-line {
+            height: 16px;
+            margin-bottom: 12px;
+        }
+
+        .skeleton-line.short {
+            width: 60%;
+        }
+
+        .skeleton-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes skeleton-loading {
+            0% {
+                background-position: 200% 0;
+            }
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        /* Animation 3: Warning Slide-In */
+        .warning-demo {
+            position: relative;
+            height: 300px;
+            background: #f7fafc;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .warning-notification {
+            position: absolute;
+            top: 20px;
+            right: -400px;
+            width: 350px;
+            background: white;
+            border-left: 4px solid var(--color-danger);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            border-radius: 8px;
+            padding: 1.5rem;
+            animation: slide-in 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards,
+                       slide-out 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) 4.5s forwards;
+        }
+
+        .warning-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .warning-icon {
+            font-size: 2rem;
+        }
+
+        .warning-title {
+            font-weight: 700;
+            color: var(--color-danger);
+        }
+
+        .warning-message {
+            color: #718096;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+
+        @keyframes slide-in {
+            to {
+                right: 20px;
+            }
+        }
+
+        @keyframes slide-out {
+            to {
+                right: -400px;
+            }
+        }
+
+        /* Animation 4: Progress Bar */
+        .progress-demo {
+            padding: 2rem;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            color: #718096;
+        }
+
+        .progress-bar-container {
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 100px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-primary), #6b6bd4);
+            border-radius: 100px;
+            animation: progress-fill 3s ease-out forwards;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes progress-fill {
+            0% { width: 0%; }
+            100% { width: 75%; }
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Animation 5: Card Flip */
+        .flip-card-container {
+            perspective: 1000px;
+            height: 300px;
+        }
+
+        .flip-card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: flip 6s infinite;
+        }
+
+        .flip-card-front,
+        .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 12px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .flip-card-front {
+            background: linear-gradient(135deg, var(--color-primary), #6b6bd4);
+            color: white;
+        }
+
+        .flip-card-back {
+            background: linear-gradient(135deg, var(--color-success), #68d391);
+            color: white;
+            transform: rotateY(180deg);
+        }
+
+        @keyframes flip {
+            0%, 100% {
+                transform: rotateY(0deg);
+            }
+            25%, 75% {
+                transform: rotateY(0deg);
+            }
+            50% {
+                transform: rotateY(180deg);
+            }
+        }
+
+        /* Animation 6: Bounce Alert */
+        .bounce-demo {
+            text-align: center;
+            padding: 3rem;
+        }
+
+        .bounce-icon {
+            font-size: 5rem;
+            display: inline-block;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-30px);
+            }
+            60% {
+                transform: translateY(-15px);
+            }
+        }
+
+        /* Animation 7: Fade Scale */
+        .fade-scale-demo {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .stat-box {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            animation: fade-scale 3s infinite;
+        }
+
+        .stat-box:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+
+        .stat-box:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        .stat-label {
+            color: #718096;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+
+        @keyframes fade-scale {
+            0%, 100% {
+                opacity: 0.5;
+                transform: scale(0.95);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Animation 8: Rotating Border */
+        .rotating-border-demo {
+            display: flex;
+            justify-content: center;
+            padding: 3rem;
+        }
+
+        .rotating-card {
+            width: 250px;
+            height: 250px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border-radius: 12px;
+        }
+
+        .rotating-card::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            background: conic-gradient(
+                from 0deg,
+                var(--color-primary),
+                var(--color-success),
+                var(--color-warning),
+                var(--color-danger),
+                var(--color-primary)
+            );
+            border-radius: 14px;
+            animation: rotate-border 3s linear infinite;
+            z-index: -1;
+        }
+
+        .rotating-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: white;
+            border-radius: 12px;
+            z-index: -1;
+        }
+
+        @keyframes rotate-border {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Code Display */
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            line-height: 1.6;
+            overflow-x: auto;
+            margin-top: 1rem;
+        }
+
+        .code-comment {
+            color: #a0aec0;
+        }
+
+        .replay-button {
+            margin-top: 1rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .replay-button:hover {
+            background: #3f3da0;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div style="background: linear-gradient(135deg, var(--color-primary), #6b6bd4); color: white; padding: 3rem; border-radius: 12px; margin-bottom: 2rem; text-align: center;">
+            <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">🎬 Rayhunter UI Animations</h1>
+            <p style="font-size: 1.125rem; opacity: 0.9;">Proposed animation designs for enhanced user experience</p>
+        </div>
+
+        <!-- Animation 1: Status Pulse -->
+        <div class="demo-section">
+            <h2 class="demo-title">1. Recording Status Pulse Animation</h2>
+            <p class="demo-description">
+                <strong>Purpose:</strong> Provides visual feedback that the system is actively recording and monitoring cellular activity.
+                Creates a sense of "alive" status without being distracting.
+            </p>
+            <div class="status-indicator">
+                <div class="pulse-ring"></div>
+                <div class="pulse-ring"></div>
+                <div class="pulse-ring"></div>
+                <div class="status-icon">✓</div>
+            </div>
+            <div class="code-block">
+<span class="code-comment">/* CSS Implementation */</span>
+@keyframes pulse-ring {
+    0% {
+        transform: scale(0.8);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.4);
+        opacity: 0;
+    }
+}
+
+.pulse-ring {
+    animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+            </div>
+        </div>
+
+        <!-- Animation 2: Loading Skeleton -->
+        <div class="demo-section">
+            <h2 class="demo-title">2. Content Loading Skeleton</h2>
+            <p class="demo-description">
+                <strong>Purpose:</strong> Displays placeholder content while data is loading, providing better perceived performance
+                and reducing the jarring effect of content appearing suddenly.
+            </p>
+            <div class="demo-grid">
+                <div class="skeleton-card">
+                    <div class="skeleton skeleton-avatar"></div>
+                    <div class="skeleton skeleton-line"></div>
+                    <div class="skeleton skeleton-line short"></div>
+                    <div class="skeleton skeleton-line"></div>
+                </div>
+                <div class="skeleton-card">
+                    <div class="skeleton skeleton-avatar"></div>
+                    <div class="skeleton skeleton-line"></div>
+                    <div class="skeleton skeleton-line short"></div>
+                    <div class="skeleton skeleton-line"></div>
+                </div>
+            </div>
+            <div class="code-block">
+<span class="code-comment">/* CSS Implementation */</span>
+@keyframes skeleton-loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 0%, #f8f8f8 50%, #f0f0f0 100%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s ease-in-out infinite;
+}
+            </div>
+        </div>
+
+        <!-- Animation 3: Warning Notification -->
+        <div class="demo-section">
+            <h2 class="demo-title">3. Warning Notification Slide-In</h2>
+            <p class="demo-description">
+                <strong>Purpose:</strong> Smoothly presents critical warnings to users with an attention-grabbing slide-in animation,
+                then auto-dismisses after a few seconds.
+            </p>
+            <div class="warning-demo">
+                <div class="warning-notification">
+                    <div class="warning-header">
+                        <span class="warning-icon">⚠️</span>
+                        <h3 class="warning-title">Suspicious Activity Detected</h3>
+                    </div>
+                    <p class="warning-message">
+                        Potential IMSI catcher detected on current network. Review the analysis for more details.
+                    </p>
+                </div>
+            </div>
+            <div class="code-block">
+<span class="code-comment">/* CSS Implementation */</span>
+@keyframes slide-in {
+    to { right: 20px; }
+}
+
+.warning-notification {
+    animation: slide-in 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+            </div>
+        </div>
+
+        <!-- Animation 4: Progress Bar -->
+        <div class="demo-section">
+            <h2 class="demo-title">4. Animated Progress Bar with Shimmer</h2>
+            <p class="demo-description">
+                <strong>Purpose:</strong> Visualizes progress for long-running operations like analysis or downloads,
+                with a shimmer effect to indicate ongoing activity.
+            </p>
+            <div class="progress-demo">
+                <div class="progress-label">
+                    <span>Analyzing recording...</span>
+                    <span>75%</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill"></div>
+                </div>
+            </div>
+            <div class="code-block">
+<span class="code-comment">/* CSS Implementation */</span>
+@keyframes progress-fill {
+    0% { width: 0%; }
+    100% { width: 75%; }
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.progress-bar-fill::after {
+    animation: shimmer 2s infinite;
+}
+            </div>
+        </div>
+
+        <!-- Animation 5: Card Flip -->
+        <div class="demo-section">
+            <h2 class="demo-title">5. 3D Card Flip Transition</h2>
+            <p class="demo-description">
+                <strong>Purpose:</strong> Creates an engaging transition between states (e.g., recording vs. stopped, or normal vs. warning).
+                Adds depth and visual interest to status changes.
+            </p>
+            <div class="flip-card-container">
+                <div class="flip-card">
+                    <div class="flip-card-front">
+                        <div style="font-size: 4rem; margin-bottom: 1rem;">🟢</div>
+                        <h3 style="font-size: 1.5rem; font-weight: 700;">Recording Active</h3>
+                        <p style="margin-top: 0.5rem; opacity: 0.9;">All systems operational</p>
+                    </div>
+                    <div class="flip-card-back">
+                        <div style="font-size: 4rem; margin-bottom: 1rem;">✓</div>
+                        <h3 style="font-size: 1.5rem; font-weight: 700;">Recording Stopped</h3>
+                        <p style="margin-top: 0.5rem; opacity: 0.9;">Data saved successfully</p>
+                    </div>
+                </div>
+            </div>
+            <div class="code-block">
+<span class="code-comment">/* CSS Implementation */</span>
+@keyframes flip {
+    0%, 100% { transform: rotateY(0deg); }
+    50% { transform: rotateY(180deg); }
+}
+
+.flip-card {
+    transform-style: preserve-3d;
+    animation: flip 6s infinite;
+}
+            </div>
+        </div>
+
+        <!-- Animation 6: Bounce Alert -->
+        <div class="demo-section">
+            <h2 class="demo-title">6. Bounce Attention Animation</h2>
+            <p class="demo-description">
+                <strong>Purpose:</strong> Draws immediate attention to critical alerts or important status changes
+                with a friendly, non-alarming bounce animation.
+            </p>
+            <div class="bounce-demo">
+                <div class="bounce-icon">🔔</div>
+                <h3 style="margin-top: 1rem; color: var(--color-warning);">New notification available</h3>
+            </div>
+            <div class="code-block">
+<span class="code-comment">/* CSS Implementation */</span>
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-30px); }
+    60% { transform: translateY(-15px); }
+}
+
+.bounce-icon {
+    animation: bounce 2s infinite;
+}
+            </div>
+        </div>
+
+        <!-- Animation 7: Fade Scale Stats -->
+        <div class="demo-section">
+            <h2 class="demo-title">7. Pulsing Statistics Display</h2>
+            <p class="demo-description">
+                <strong>Purpose:</strong> Subtly highlights different statistics in sequence, helping users understand
+                the relationships between metrics while maintaining visual hierarchy.
+            </p>
+            <div class="fade-scale-demo">
+                <div class="stat-box">
+                    <div class="stat-number">45.2</div>
+                    <div class="stat-label">MB Captured</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">2:34</div>
+                    <div class="stat-label">Duration</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Warnings</div>
+                </div>
+            </div>
+            <div class="code-block">
+<span class="code-comment">/* CSS Implementation */</span>
+@keyframes fade-scale {
+    0%, 100% {
+        opacity: 0.5;
+        transform: scale(0.95);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.stat-box { animation: fade-scale 3s infinite; }
+.stat-box:nth-child(2) { animation-delay: 0.3s; }
+            </div>
+        </div>
+
+        <!-- Animation 8: Rotating Border -->
+        <div class="demo-section">
+            <h2 class="demo-title">8. Rotating Gradient Border</h2>
+            <p class="demo-description">
+                <strong>Purpose:</strong> Creates a premium, modern look for active or selected cards.
+                Indicates an "active" or "processing" state with a rotating color gradient.
+            </p>
+            <div class="rotating-border-demo">
+                <div class="rotating-card">
+                    <div style="text-align: center;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">⚡</div>
+                        <h3 style="color: var(--color-primary);">Active Monitoring</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="code-block">
+<span class="code-comment">/* CSS Implementation */</span>
+@keyframes rotate-border {
+    to { transform: rotate(360deg); }
+}
+
+.rotating-card::before {
+    background: conic-gradient(from 0deg, blue, green, yellow, red, blue);
+    animation: rotate-border 3s linear infinite;
+}
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="demo-section" style="background: linear-gradient(135deg, #f7fafc, #edf2f7); border: 2px solid #e2e8f0;">
+            <h2 class="demo-title">💡 Implementation Notes</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+                <div>
+                    <h4 style="color: var(--color-primary); margin-bottom: 0.5rem;">Performance</h4>
+                    <ul style="color: #718096; font-size: 0.875rem; line-height: 1.6; padding-left: 1.25rem;">
+                        <li>Use CSS transforms (translate, scale, rotate) instead of position properties</li>
+                        <li>Leverage GPU acceleration with will-change property</li>
+                        <li>Keep animation duration under 300ms for interactions</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="color: var(--color-primary); margin-bottom: 0.5rem;">Accessibility</h4>
+                    <ul style="color: #718096; font-size: 0.875rem; line-height: 1.6; padding-left: 1.25rem;">
+                        <li>Respect prefers-reduced-motion media query</li>
+                        <li>Provide alternative non-animated indicators</li>
+                        <li>Ensure animations don't flash more than 3 times per second</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="color: var(--color-primary); margin-bottom: 0.5rem;">Browser Support</h4>
+                    <ul style="color: #718096; font-size: 0.875rem; line-height: 1.6; padding-left: 1.25rem;">
+                        <li>All animations use standard CSS3 properties</li>
+                        <li>Compatible with modern browsers (Chrome, Firefox, Safari, Edge)</li>
+                        <li>Gracefully degrades in older browsers</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add reload functionality
+        document.querySelectorAll('.replay-button').forEach(button => {
+            button.addEventListener('click', () => {
+                location.reload();
+            });
+        });
+    </script>
+</body>
+</html>
