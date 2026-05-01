@@ -442,6 +442,57 @@
             }
         }
 
+        /* Accessibility: Respect reduced-motion preference */
+        @media (prefers-reduced-motion: reduce) {
+            /* Disable all looping / continuous animations */
+            .pulse-ring {
+                animation: none;
+                opacity: 0;
+            }
+
+            .skeleton {
+                animation: none;
+                background: #f0f0f0;
+            }
+
+            .warning-notification {
+                animation: none;
+                right: 20px; /* show in final position immediately */
+            }
+
+            .progress-bar-fill {
+                animation: none;
+                width: 75%; /* show final state immediately */
+            }
+
+            .progress-bar-fill::after {
+                animation: none;
+                display: none; /* remove shimmer overlay */
+            }
+
+            .flip-card {
+                animation: none;
+            }
+
+            .bounce-icon {
+                animation: none;
+            }
+
+            .stat-box {
+                animation: none;
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            .rotating-card::before {
+                animation: none;
+            }
+
+            .replay-button {
+                transition: none;
+            }
+        }
+
         /* Code Display */
         .code-block {
             background: #2d3748;
