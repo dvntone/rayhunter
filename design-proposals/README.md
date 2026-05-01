@@ -81,9 +81,9 @@ This directory contains comprehensive UI/UX design proposals for the Rayhunter w
 
 ### View the Mockups
 
-1. **Open a terminal** in the `design-proposals` directory:
+1. **Open a terminal** in the repository root, then navigate to `design-proposals`:
    ```bash
-   cd /home/runner/work/rayhunter/rayhunter/design-proposals
+   cd design-proposals
    ```
 
 2. **Open mockups in browser:**
