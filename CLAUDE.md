@@ -287,7 +287,7 @@ Key source files:
 - `src/lib/analysisManager.svelte.ts` — analysis progress tracking
 - `src/lib/analysis.svelte.ts` — analysis report fetching
 
-The built output is embedded into the daemon binary at compile time via `include_dir`.
+The built frontend assets are embedded into the daemon binary at compile time using `include_bytes!` for specific files.
 
 ---
 
