@@ -206,6 +206,21 @@
             50% { opacity: 0.5; }
         }
 
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation: none !important;
+                transition: none !important;
+                scroll-behavior: auto !important;
+            }
+
+            .pulse {
+                animation: none !important;
+                opacity: 1;
+            }
+        }
+
         .status-info {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
