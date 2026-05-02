@@ -33,7 +33,7 @@ jobs:
             build-mode: none
           - language: rust
             os: ubuntu-latest
-            build-mode: manual
+            build-mode: none
 
     steps:
       - name: Checkout repository
@@ -46,25 +46,6 @@ jobs:
         with:
           languages: ${{ matrix.language }}
           build-mode: ${{ matrix.build-mode }}
-
-      - name: Setup Rust toolchain
-        if: matrix.language == 'rust'
-        uses: dtolnay/rust-toolchain@stable
-
-      - name: Setup Rust cache
-        if: matrix.language == 'rust'
-        uses: Swatinem/rust-cache@v2
-
-      - name: Build Rust projects
-        if: matrix.language == 'rust'
-        run: |
-          # Build web frontend first
-          pushd daemon/web
-          npm install
-          npm run build
-          popd
-          # Build Rust projects (skip firmware build which requires cross-compilation)
-          NO_FIRMWARE_BIN=true cargo build --verbose
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
