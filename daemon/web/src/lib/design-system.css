@@ -1,0 +1,219 @@
+/**
+ * Rayhunter Design System
+ *
+ * CSS custom properties (design tokens) for the Rayhunter web interface.
+ * Based on the comprehensive design proposal for UI/UX modernization.
+ */
+
+:root {
+    /* ========================================
+       PRIMARY COLORS
+       ======================================== */
+    --color-primary: #4e4eb1;
+    --color-primary-dark: #3f3da0;
+    --color-primary-light: #6b6bd4;
+    --color-primary-subtle: rgba(78, 78, 177, 0.1);
+
+    /* ========================================
+       SEMANTIC COLORS
+       ======================================== */
+    /* Success / Active / Safe */
+    --color-success: #48bb78;
+    --color-success-dark: #38a169;
+    --color-success-light: #68d391;
+    --color-success-subtle: rgba(72, 187, 120, 0.1);
+
+    /* Warning / Caution */
+    --color-warning: #ed8936;
+    --color-warning-dark: #dd6b20;
+    --color-warning-light: #f6ad55;
+    --color-warning-subtle: rgba(237, 137, 54, 0.1);
+
+    /* Danger / Error / Alert */
+    --color-danger: #f56565;
+    --color-danger-dark: #e53e3e;
+    --color-danger-light: #fc8181;
+    --color-danger-subtle: rgba(245, 101, 101, 0.1);
+
+    /* Info / Neutral */
+    --color-info: #4299e1;
+    --color-info-dark: #3182ce;
+    --color-info-light: #63b3ed;
+    --color-info-subtle: rgba(66, 153, 225, 0.1);
+
+    /* ========================================
+       NEUTRAL COLORS (LIGHT THEME)
+       ======================================== */
+    /* Backgrounds */
+    --color-bg-base: #f5f7fa;
+    --color-bg-surface: #ffffff;
+    --color-bg-hover: #f7fafc;
+    --color-bg-active: #edf2f7;
+
+    /* Text */
+    --color-text-primary: #2d3748;
+    --color-text-secondary: #718096;
+    --color-text-muted: #a0aec0;
+
+    /* Borders */
+    --color-border: #e2e8f0;
+    --color-border-light: #edf2f7;
+    --color-border-dark: #cbd5e0;
+
+    /* ========================================
+       TYPOGRAPHY
+       ======================================== */
+    --font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --font-family-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Courier New', monospace;
+
+    /* Font Sizes */
+    --font-size-xs: 0.75rem;      /* 12px - Metadata, timestamps */
+    --font-size-sm: 0.875rem;     /* 14px - Secondary text, labels */
+    --font-size-base: 1rem;       /* 16px - Body text */
+    --font-size-lg: 1.125rem;     /* 18px - Large body, subheadings */
+    --font-size-xl: 1.25rem;      /* 20px - Section titles */
+    --font-size-2xl: 1.5rem;      /* 24px - Card titles */
+    --font-size-3xl: 1.875rem;    /* 30px - Page titles */
+    --font-size-4xl: 2.25rem;     /* 36px - Hero text */
+
+    /* Font Weights */
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+    /* Line Heights */
+    --line-height-tight: 1.25;
+    --line-height-normal: 1.5;
+    --line-height-relaxed: 1.75;
+
+    /* ========================================
+       SPACING SCALE
+       ======================================== */
+    --spacing-0: 0;
+    --spacing-1: 0.25rem;    /* 4px */
+    --spacing-2: 0.5rem;     /* 8px */
+    --spacing-3: 0.75rem;    /* 12px */
+    --spacing-4: 1rem;       /* 16px */
+    --spacing-5: 1.25rem;    /* 20px */
+    --spacing-6: 1.5rem;     /* 24px */
+    --spacing-8: 2rem;       /* 32px */
+    --spacing-10: 2.5rem;    /* 40px */
+    --spacing-12: 3rem;      /* 48px */
+    --spacing-16: 4rem;      /* 64px */
+
+    /* ========================================
+       BORDER RADIUS
+       ======================================== */
+    --radius-none: 0;
+    --radius-sm: 0.25rem;    /* 4px - Small elements */
+    --radius-md: 0.5rem;     /* 8px - Buttons, inputs */
+    --radius-lg: 0.75rem;    /* 12px - Cards */
+    --radius-xl: 1rem;       /* 16px - Large cards */
+    --radius-full: 9999px;   /* Fully rounded (pills, avatars) */
+
+    /* ========================================
+       SHADOWS
+       ======================================== */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+    /* ========================================
+       ANIMATION
+       ======================================== */
+    --duration-fast: 150ms;
+    --duration-normal: 300ms;
+    --duration-slow: 500ms;
+    --duration-pulse: 2s;
+
+    --easing-default: cubic-bezier(0.4, 0, 0.2, 1);
+    --easing-in: cubic-bezier(0.4, 0, 1, 1);
+    --easing-out: cubic-bezier(0, 0, 0.2, 1);
+    --easing-in-out: cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+/* ========================================
+   DARK THEME
+   ======================================== */
+@media (prefers-color-scheme: dark) {
+    :root {
+        /* Primary Colors (brighter for dark mode) */
+        --color-primary: #6b6bd4;
+        --color-primary-dark: #5555b8;
+        --color-primary-light: #8585e0;
+
+        /* Semantic Colors (adjusted for dark mode) */
+        --color-success: #3fb950;
+        --color-success-dark: #2ea043;
+        --color-success-light: #56d364;
+
+        --color-warning: #d29922;
+        --color-warning-dark: #b87e0f;
+        --color-warning-light: #e3b341;
+
+        --color-danger: #da3633;
+        --color-danger-dark: #b62324;
+        --color-danger-light: #f85149;
+
+        --color-info: #58a6ff;
+        --color-info-dark: #388bfd;
+        --color-info-light: #79c0ff;
+
+        /* Backgrounds (dark) */
+        --color-bg-base: #0f1419;
+        --color-bg-surface: #161b22;
+        --color-bg-hover: #1c2128;
+        --color-bg-active: #262c36;
+
+        /* Text (light on dark) */
+        --color-text-primary: #e6edf3;
+        --color-text-secondary: #8b949e;
+        --color-text-muted: #6e7681;
+
+        /* Borders (subtle on dark) */
+        --color-border: #30363d;
+        --color-border-light: #21262d;
+        --color-border-dark: #484f58;
+
+        /* Shadows (darker in dark mode) */
+        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+        --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
+    }
+}
+
+/* ========================================
+   ACCESSIBILITY: REDUCED MOTION
+   ======================================== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* ========================================
+   UTILITY CLASSES
+   ======================================== */
+.focus-ring {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+.focus-ring-danger {
+    outline: 2px solid var(--color-danger);
+    outline-offset: 2px;
+}
+
+.transition-default {
+    transition-property: all;
+    transition-duration: var(--duration-normal);
+    transition-timing-function: var(--easing-default);
+}
