@@ -1,0 +1,96 @@
+# Automatically label PRs based on changed files
+
+# Rust/Backend
+rust:
+  - changed-files:
+    - any-glob-to-any-file:
+      - '**/*.rs'
+      - '**/Cargo.toml'
+      - '**/Cargo.lock'
+      - '.cargo/**'
+
+# Daemon
+daemon:
+  - changed-files:
+    - any-glob-to-any-file: 'daemon/**'
+
+# Installer
+installer:
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'installer/**'
+      - 'installer-gui/**'
+
+# Frontend/Web
+frontend:
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'daemon/web/**'
+      - 'installer-gui/**/*.{js,ts,tsx,jsx,svelte,vue,html,css}'
+
+# JavaScript/TypeScript
+javascript:
+  - changed-files:
+    - any-glob-to-any-file:
+      - '**/*.js'
+      - '**/*.ts'
+      - '**/*.tsx'
+      - '**/*.jsx'
+      - '**/package.json'
+      - '**/package-lock.json'
+      - '**/tsconfig.json'
+
+# Svelte
+svelte:
+  - changed-files:
+    - any-glob-to-any-file: '**/*.svelte'
+
+# Documentation
+documentation:
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'doc/**'
+      - '**/*.md'
+      - 'book.toml'
+
+# CI/CD
+ci:
+  - changed-files:
+    - any-glob-to-any-file:
+      - '.github/workflows/**'
+      - '.github/actions/**'
+
+# Tests
+tests:
+  - changed-files:
+    - any-glob-to-any-file:
+      - '**/*_test.rs'
+      - '**/*.test.{js,ts,tsx,jsx}'
+      - '**/*.spec.{js,ts,tsx,jsx}'
+      - 'check/**'
+
+# Dependencies
+dependencies:
+  - changed-files:
+    - any-glob-to-any-file:
+      - '**/Cargo.toml'
+      - '**/Cargo.lock'
+      - '**/package.json'
+      - '**/package-lock.json'
+
+# Build/Tooling
+build:
+  - changed-files:
+    - any-glob-to-any-file:
+      - '**/Makefile'
+      - '**/*.sh'
+      - 'scripts/**'
+      - 'docker_make.sh'
+      - 'make.sh'
+
+# Security
+security:
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'SECURITY.md'
+      - '.github/workflows/codeql.yml'

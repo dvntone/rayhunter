@@ -1,0 +1,178 @@
+name: Dependency Updates
+
+on:
+  schedule:
+    # Run weekly on Monday at 9am UTC
+    - cron: '0 9 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check-cargo-updates:
+    name: Check Rust dependency updates
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Install cargo-outdated
+        run: cargo install cargo-outdated --locked
+
+      - name: Check for outdated dependencies
+        id: cargo_outdated
+        run: |
+          cargo outdated --format json > cargo-outdated.json || true
+          # Check if JSON contains actual outdated dependencies, not just empty structure
+          if [ -s cargo-outdated.json ]; then
+            HAS_OUTDATED=$(jq '[.dependencies[]? | select(.latest and .project != .latest)] | length > 0' cargo-outdated.json)
+            if [ "$HAS_OUTDATED" = "true" ]; then
+              echo "has_updates=true" >> $GITHUB_OUTPUT
+            else
+              echo "has_updates=false" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "has_updates=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create issue for outdated Rust dependencies
+        if: steps.cargo_outdated.outputs.has_updates == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const outdated = JSON.parse(fs.readFileSync('cargo-outdated.json', 'utf8'));
+
+            let body = '## Outdated Rust Dependencies\n\n';
+            body += 'The following Rust dependencies have updates available:\n\n';
+            body += '| Package | Current | Latest | Kind |\n';
+            body += '|---------|---------|--------|------|\n';
+
+            for (const dep of outdated.dependencies || []) {
+              if (dep.latest && dep.project !== dep.latest) {
+                body += `| ${dep.name} | ${dep.project} | ${dep.latest} | ${dep.kind || 'normal'} |\n`;
+              }
+            }
+
+            body += '\n\nRun `cargo update` to update dependencies within SemVer compatibility.';
+            body += '\n\nFor major version updates, review changelogs and update Cargo.toml manually.';
+
+            // Check if issue already exists
+            const issues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ['dependencies', 'rust'],
+              state: 'open'
+            });
+
+            const existingIssue = issues.data.find(issue =>
+              issue.title.includes('Outdated Rust Dependencies')
+            );
+
+            if (existingIssue) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existingIssue.number,
+                body: body + '\n\n---\nUpdated: ' + new Date().toISOString()
+              });
+            } else {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: '🔄 Outdated Rust Dependencies - ' + new Date().toISOString().split('T')[0],
+                body: body,
+                labels: ['dependencies', 'rust']
+              });
+            }
+
+  check-npm-updates:
+    name: Check npm dependency updates
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    strategy:
+      matrix:
+        project:
+          - daemon/web
+          - installer-gui
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Check for outdated npm packages
+        id: npm_outdated
+        working-directory: ${{ matrix.project }}
+        run: |
+          npm install
+          npm outdated --json > npm-outdated.json || true
+          if [ -s npm-outdated.json ] && [ "$(cat npm-outdated.json)" != "{}" ]; then
+            echo "has_updates=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_updates=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create issue for outdated npm dependencies
+        if: steps.npm_outdated.outputs.has_updates == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            const project = '${{ matrix.project }}';
+            const filePath = path.join(project, 'npm-outdated.json');
+            const outdated = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+
+            let body = `## Outdated npm Dependencies in \`${project}\`\n\n`;
+            body += 'The following npm dependencies have updates available:\n\n';
+            body += '| Package | Current | Wanted | Latest | Type |\n';
+            body += '|---------|---------|--------|--------|------|\n';
+
+            for (const [pkg, info] of Object.entries(outdated)) {
+              body += `| ${pkg} | ${info.current} | ${info.wanted} | ${info.latest} | ${info.type || 'dependencies'} |\n`;
+            }
+
+            body += '\n\nRun `npm update` to update dependencies within SemVer compatibility.';
+            body += '\n\nFor major version updates, review changelogs and update package.json manually.';
+
+            // Check if issue already exists
+            const issues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ['dependencies', 'npm'],
+              state: 'open'
+            });
+
+            const existingIssue = issues.data.find(issue =>
+              issue.title.includes(`Outdated npm Dependencies - ${project}`)
+            );
+
+            if (existingIssue) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existingIssue.number,
+                body: body + '\n\n---\nUpdated: ' + new Date().toISOString()
+              });
+            } else {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: `🔄 Outdated npm Dependencies - ${project} - ` + new Date().toISOString().split('T')[0],
+                body: body,
+                labels: ['dependencies', 'npm']
+              });
+            }
