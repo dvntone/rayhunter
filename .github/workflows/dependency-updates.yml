@@ -30,8 +30,14 @@ jobs:
         id: cargo_outdated
         run: |
           cargo outdated --format json > cargo-outdated.json || true
+          # Check if JSON contains actual outdated dependencies, not just empty structure
           if [ -s cargo-outdated.json ]; then
-            echo "has_updates=true" >> $GITHUB_OUTPUT
+            HAS_OUTDATED=$(jq '[.dependencies[]? | select(.latest and .project != .latest)] | length > 0' cargo-outdated.json)
+            if [ "$HAS_OUTDATED" = "true" ]; then
+              echo "has_updates=true" >> $GITHUB_OUTPUT
+            else
+              echo "has_updates=false" >> $GITHUB_OUTPUT
+            fi
           else
             echo "has_updates=false" >> $GITHUB_OUTPUT
           fi
