@@ -45,6 +45,8 @@
 
 <div
     class="{status_row_color} {status_border_color} drop-shadow p-4 flex flex-col gap-2 border rounded-md flex-1 overflow-x-auto overflow-y-hidden"
+    role={current ? 'status' : undefined}
+    aria-live={current ? 'polite' : undefined}
 >
     {#if current}
         <div class="flex flex-row justify-between gap-2">
