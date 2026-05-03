@@ -1,0 +1,41 @@
+name: Greet First-Time Contributors
+
+on:
+  issues:
+    types: [opened]
+  pull_request_target:
+    types: [opened]
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  greeting:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/first-interaction@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          issue-message: |
+            👋 Welcome to Rayhunter!
+
+            Thank you for opening your first issue. We appreciate your contribution to the project!
+
+            Please ensure you've provided all the necessary information for us to address your issue effectively.
+
+            Check out our [Contributing Guidelines](https://github.com/EFForg/rayhunter/blob/main/CONTRIBUTING.md) for more information on how to get involved.
+
+            A maintainer will review your issue soon. Thanks for your patience! 🚀
+          pr-message: |
+            🎉 Welcome to Rayhunter!
+
+            Thank you for opening your first pull request! We're excited to review your contribution.
+
+            Before merging, please ensure:
+            - [ ] Your code follows our style guidelines (`cargo fmt` and `cargo clippy`)
+            - [ ] You've added or updated tests if applicable
+            - [ ] You've updated documentation if needed
+            - [ ] You've read our [Contributing Guidelines](https://github.com/EFForg/rayhunter/blob/main/CONTRIBUTING.md)
+
+            A maintainer will review your PR soon. Thanks for contributing! 🎊
