@@ -150,24 +150,27 @@ The daemon uses **Tokio single-threaded** (`#[tokio::main(flavor = "current_thre
 ### REST API Routes
 
 ```
-GET  /api/qmdl-manifest          → recording list
-GET  /api/system-stats           → CPU, memory, battery
-GET  /api/pcap/{name}            → download PCAP
-GET  /api/qmdl/{name}            → download QMDL
-GET  /api/zip/{name}             → download ZIP archive
-GET  /api/analysis-report/{name} → NDJSON analysis report
-GET  /api/analysis               → analysis status
-POST /api/analysis/{name}        → trigger analysis
-POST /api/start-recording        → start diag recording
-POST /api/stop-recording         → stop recording
+GET  /                            → permanent redirect to /index.html
+GET  /api/qmdl-manifest           → recording list
+GET  /api/system-stats            → CPU, memory, battery
+GET  /api/log                     → daemon log output
+GET  /api/pcap/{name}             → download PCAP
+GET  /api/qmdl/{name}             → download QMDL
+GET  /api/zip/{name}              → download ZIP archive
+GET  /api/analysis-report/{name}  → NDJSON analysis report
+GET  /api/analysis                → analysis status
+POST /api/analysis/{name}         → trigger analysis
+POST /api/start-recording         → start diag recording
+POST /api/stop-recording          → stop recording
 POST /api/delete-recording/{name}
 POST /api/delete-all-recordings
-GET  /api/config                 → current config
-POST /api/config                 → update config
+GET  /api/config                  → current config
+POST /api/config                  → update config
 POST /api/test-notification
 GET  /api/time
 POST /api/time-offset
-GET  /{*path}                    → SvelteKit frontend (embedded via include_dir)
+POST /api/debug/display-state     → debug display-state override
+GET  /{*path}                     → SvelteKit frontend assets
 ```
 
 ---
