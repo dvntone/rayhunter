@@ -44,10 +44,7 @@ pub async fn telnet_send_command_with_output(
     let mut read_buf = Vec::new();
     let _ = timeout(Duration::from_secs(10), async {
         let mut buf = [0; 4096];
-        loop {
-            let Ok(bytes_read) = reader.read(&mut buf).await else {
-                break;
-            };
+        while let Ok(bytes_read) = reader.read(&mut buf).await {
             let bytes = &buf[..bytes_read];
             if bytes.is_empty() {
                 continue;
