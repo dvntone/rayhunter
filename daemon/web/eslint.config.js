@@ -49,5 +49,15 @@ export default ts.config(
                 },
             ],
         },
+    },
+    {
+        // Base UI components intentionally use rest-props to forward HTML attributes
+        // to their underlying elements (e.g. aria-*, data-*, event handlers).
+        // These are not custom elements so the custom_element_props_identifier
+        // warning does not apply.
+        files: ['src/lib/components/base/**/*.svelte'],
+        rules: {
+            'svelte/valid-compile': 'off',
+        },
     }
 );

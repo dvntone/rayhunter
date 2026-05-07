@@ -48,7 +48,7 @@
 >
     {#if current}
         <div class="flex flex-row justify-between gap-2">
-            <span class="text-xl mb-2">Current Recording</span>
+            <span class="text-xl mb-2" role="status" aria-live="polite">Current Recording</span>
             <span class=""
                 ><AnalysisStatus
                     onclick={toggle_analysis_visibility}

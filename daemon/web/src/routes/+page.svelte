@@ -59,7 +59,11 @@
     <!-- https://www.w3.org/WAI/tutorials/images/decorative/ -->
     <img src="/rayhunter_text.png" alt="" class="h-10 xl:h-12" />
     <div class="flex flex-row gap-4">
-        <button onclick={() => (logview_shown = true)} class="flex flex-row gap-1 group">
+        <button
+            onclick={() => (logview_shown = true)}
+            class="flex flex-row gap-1 group"
+            aria-label="View logs"
+        >
             <span class="hidden text-white group-hover:text-gray-400 lg:flex">Logs</span>
             <svg
                 class="w-6 h-6 text-white group-hover:text-gray-400"
@@ -108,6 +112,8 @@
             class="flex flex-row gap-1 group"
             href="https://github.com/EFForg/rayhunter/issues"
             target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Report an issue on GitHub"
         >
             <span class="hidden text-white group-hover:text-gray-400 lg:flex">Report Issue</span>
             <svg
@@ -130,6 +136,8 @@
             class="flex flex-row gap-1 group"
             href="https://efforg.github.io/rayhunter/"
             target="_blank"
+            rel="noopener noreferrer"
+            aria-label="View Rayhunter documentation"
         >
             <span class="hidden text-white group-hover:text-gray-400 lg:flex">Docs</span>
             <svg
@@ -154,6 +162,8 @@
             class="flex flex-row gap-1 group"
             href="https://supporters.eff.org/donate"
             target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Donate to EFF"
         >
             <span class="hidden text-white group-hover:text-gray-400 lg:flex">Donate</span>
             <svg

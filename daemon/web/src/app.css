@@ -1,3 +1,6 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+/* Rayhunter Design System */
+@import './lib/design-system.css';
